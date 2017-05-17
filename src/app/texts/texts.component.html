@@ -1,0 +1,14 @@
+<ul class="container col-xs-12 list-group">
+    <li class="list-item row" *ngFor="let item of list | async">
+        <!-- *ngIf="filterForDistance(item.location)" -->
+        <div class="padding-top col-xs-9">
+            {{ item.text }}
+        </div>
+        <button class="btn btn-danger col-xs-1" (click)="delete(item.$key)">X</button>
+        <a class="col-xs-2 btn btn-default" (click)="upvote(item.upvote, item.$key)">
+            <i class="fa fa-thumbs-up" aria-hidden="true">
+                {{item.upvote}}
+            </i>
+        </a>
+    </li>
+</ul>

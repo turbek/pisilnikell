@@ -1,3 +1,42 @@
-<h1>
-  {{title}}
-</h1>
+<app-navbar [title]="title"></app-navbar>
+<div class="container-fluid app">
+    <div class="row">
+
+        <agm-map class="col-xs-12"
+        [latitude]="lat"
+        [longitude]="lng"
+        [zoom]="zoom"
+        [mapDraggable]="true"
+        [streetViewControl]="false"
+        [disableDefaultUI]="true">
+
+            <agm-marker
+            [latitude]="lat"
+            [longitude]="lng"
+            [markerDraggable]="true"
+            (dragEnd)="setMarkerPosition($event)"
+            (dragEnd)="renderMessages()">
+            </agm-marker>
+
+        </agm-map>
+
+        <input type="text" class="form-control col-xs-12" #textInput>
+        <button class="btn btn-primary col-xs-12" (click)="add(textInput)">Add</button>
+
+        <app-texts [list]="list"
+                   [location]="location"
+                   (itemDeleted)="deleteItem($event)"
+                   (upvoteCreated)="onUpvoteAdded($event)">
+        </app-texts>
+
+        <p class="center">Eddig vagyok hajlandó elmenni pisilni:</p>
+        <p-slider class="col-xs-12"
+        [(ngModel)]="distance"
+        [min]="50"
+        [max]="1000"
+        (ngModelChange)="renderMessages()">
+        </p-slider>
+        <p class="center">{{distance}} m</p>
+
+    </div>
+</div>

@@ -18,6 +18,16 @@ li {
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 15px;
     background-color: #F4F1BB;
+    padding-right: 0;
     line-height: 1;
-    /*border-bottom: 1px solid #c0c0c0;*/
+    box-shadow: 2px 2px 2px #888888;
+}
+
+.noPadding {
+    padding: 0;
+}
+
+.upvote {
+    vertical-align: middle;
+    display: table-cell;
 }

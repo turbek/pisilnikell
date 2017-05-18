@@ -10,6 +10,7 @@ import "rxjs/add/operator/map";
 export class AppComponent implements OnInit {
     list: FirebaseListObservable<any[]>;
     title: string = 'pisilnikell';
+    myMarkerLabel: string = 'ÉN';
     location = <Coordinates>{};
     lat: number = 47;
     lng: number = 19;
@@ -56,6 +57,13 @@ export class AppComponent implements OnInit {
         let temp: number = upvoteKeyObject.upvote;
         this.db.object('/items/'+upvoteKeyObject.key).update({
             upvote: temp += 1
+        });
+    }
+
+    onUpvoteDeleted(upvoteKeyObject){
+        let temp: number = upvoteKeyObject.upvote;
+        this.db.object('/items/'+upvoteKeyObject.key).update({
+            upvote: temp -= 1
         });
     }
 

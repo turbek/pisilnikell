@@ -11,6 +11,7 @@
         [disableDefaultUI]="true">
 
             <agm-marker
+            [label]="myMarkerLabel"
             [latitude]="lat"
             [longitude]="lng"
             [markerDraggable]="true"
@@ -26,7 +27,9 @@
         <app-texts [list]="list"
                    [location]="location"
                    (itemDeleted)="deleteItem($event)"
-                   (upvoteCreated)="onUpvoteAdded($event)">
+                   (upvoteCreated)="onUpvoteAdded($event)"
+                   (upvoteDeleted)="onUpvoteDeleted($event)"
+                   >
         </app-texts>
 
         <p class="center">Eddig vagyok hajlandó elmenni pisilni:</p>

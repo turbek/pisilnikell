@@ -10,12 +10,11 @@ import "rxjs/add/operator/map";
 export class AppComponent implements OnInit {
     list: FirebaseListObservable<any[]>;
     title: string = 'pisilnikell';
-    myMarkerLabel: string = 'ÉN';
     location = <Coordinates>{};
     lat: number = 47;
     lng: number = 19;
-    zoom: number = 17;
-    distance: number = 400;
+    distance: number = 450;
+    zoom: number = 15;
 
     constructor(private db: AngularFireDatabase){
     }
@@ -78,17 +77,32 @@ export class AppComponent implements OnInit {
         this.lng = coordsObject.coords.lng;
     }
 
-    isNear(lat1: number, lon1: number){
+    calculateDistance(lat1: number, lon1: number){
         var radlat1 = Math.PI * lat1/180
-    	var radlat2 = Math.PI * this.lat/180
-    	var theta = lon1-this.lng
-    	var radtheta = Math.PI * theta/180
-    	var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-    	dist = Math.acos(dist)
-    	dist = dist * 180/Math.PI
-    	dist = dist * 60 * 1.1515
-    	dist = dist * 1.609344
-    	return dist*1000 <= this.distance;
+        var radlat2 = Math.PI * this.lat/180
+        var theta = lon1-this.lng
+        var radtheta = Math.PI * theta/180
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        dist = Math.acos(dist)
+        dist = dist * 180/Math.PI
+        dist = dist * 60 * 1.1515
+        dist = dist * 1.609344
+        return dist*1000;
+    }
+
+    isNear(lat1: number, lon1: number){
+        return this.calculateDistance(lat1, lon1) <= this.distance;
+    }
+
+    howFar(lat1: number, lon1: number){
+        return Math.floor(this.calculateDistance(lat1, lon1));
+    }
+
+    putOnMaps(lat1: number, lon1: number){
+        return "https://www.google.com/maps/place/"
+                +String(lat1)
+                +","
+                +String(lon1);
     }
 
 }

@@ -5,7 +5,7 @@
         </div>
         <!-- <span class="col-xs-1" (click)="delete(item.$key)">X</span> -->
         <div class="upvote col-xs-2">
-            <i class="noPadding col-xs-6"
+            <i class="heart noPadding col-xs-6"
                aria-hidden="true"
                [ngClass]="isActive(item.$key) ? 'fa fa-heart' : 'fa fa-heart-o'"
                (click)="upvote(item.upvote, item.$key)"

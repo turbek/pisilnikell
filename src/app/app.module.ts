@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 
 import { AgmCoreModule } from '@agm/core';
+import { AgmInfoWindow } from '@agm/core/directives/info-window';
 import { NavbarComponent } from './navbar/navbar.component';
 
 

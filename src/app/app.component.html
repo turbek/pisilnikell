@@ -1,5 +1,5 @@
 <app-navbar [title]="title"></app-navbar>
-<div class="container-fluid app">
+<div class="container app">
     <div class="row">
 
         <agm-map class="col-xs-12"
@@ -11,35 +11,57 @@
         [disableDefaultUI]="true">
 
             <agm-marker
-            [label]="myMarkerLabel"
             [latitude]="lat"
             [longitude]="lng"
             [markerDraggable]="true"
+            [openInfoWindow]="true"
             (dragEnd)="setMarkerPosition($event)"
             (dragEnd)="renderMessages()">
+                <agm-info-window>
+                    Itt kell nagyon pisilned!
+                </agm-info-window>
+            </agm-marker>
+
+            <agm-marker *ngFor="let item of list | async"
+            [latitude]="item.location.lat"
+            [longitude]="item.location.lng"
+            [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'">
+                <agm-info-window>
+                    {{item.text}}<br>
+                    <i class="fa fa-heart right"></i>{{item.upvote}}<br>
+                    távolság: <strong>{{ howFar(item.location.lat, item.location.lng) }} m</strong><br>
+                    <a [attr.href]="putOnMaps(item.location.lat, item.location.lng)">Google Maps</a>
+                </agm-info-window>
             </agm-marker>
 
         </agm-map>
 
-        <input type="text" class="form-control col-xs-12" #textInput>
-        <button class="btn btn-primary col-xs-12" (click)="add(textInput)">Add</button>
+        <div class="inputField col-xs-12 row">
+            <div class="noPadding col-xs-10">
+                <input type="text" class="form-control col-xs-12" #textInput>
+            </div>
+            <div class="noPadding col-xs-2">
+                <button class="btn btn-primary col-xs-12" (click)="add(textInput)">Add</button>
+            </div>
+        </div>
 
         <app-texts [list]="list"
                    [location]="location"
                    (itemDeleted)="deleteItem($event)"
                    (upvoteCreated)="onUpvoteAdded($event)"
-                   (upvoteDeleted)="onUpvoteDeleted($event)"
-                   >
+                   (upvoteDeleted)="onUpvoteDeleted($event)">
         </app-texts>
 
-        <p class="center">Eddig vagyok hajlandó elmenni pisilni:</p>
-        <p-slider class="col-xs-12"
-        [(ngModel)]="distance"
-        [min]="50"
-        [max]="1000"
-        (ngModelChange)="renderMessages()">
-        </p-slider>
-        <p class="center">{{distance}} m</p>
+        <div class="bottom col-xs-12">
+            <p class="center">Eddig vagyok hajlandó elmenni pisilni:</p>
+            <p-slider class="col-xs-12"
+                      [(ngModel)]="distance"
+                      [min]="50"
+                      [max]="1000"
+                      (ngModelChange)="renderMessages()">
+            </p-slider>
+            <p class="center">{{distance}} m</p>
+        </div>
 
     </div>
 </div>

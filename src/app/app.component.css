@@ -1,14 +1,19 @@
 .sebm-google-map-container {
     padding: 0;
-    height: 200px;
+    height: 250px;
 }
 
 .app {
-    background-color: #9BC1BC;
+    background-color: #4ECDC4;
 }
 
 .center {
     text-align: center;
     font-family: 'Mogra', cursive;
     color: #5e5e5e;
+}
+
+.inputField {
+    padding-left: 30px;
+    padding-right: 0;
 }

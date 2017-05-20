@@ -50,4 +50,8 @@ export class TextsComponent implements OnInit {
         return false;
     }
 
+    textClicked() {
+        console.log(123);
+    }
+
 }

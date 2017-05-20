@@ -78,11 +78,11 @@ export class AppComponent implements OnInit {
     }
 
     calculateDistance(lat1: number, lon1: number){
-        var radlat1 = Math.PI * lat1/180
-        var radlat2 = Math.PI * this.lat/180
-        var theta = lon1-this.lng
-        var radtheta = Math.PI * theta/180
-        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        let radlat1 = Math.PI * lat1/180
+        let radlat2 = Math.PI * this.lat/180
+        let theta = lon1-this.lng
+        let radtheta = Math.PI * theta/180
+        let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
         dist = Math.acos(dist)
         dist = dist * 180/Math.PI
         dist = dist * 60 * 1.1515

@@ -1,13 +1,18 @@
 nav {
     margin: 0;
-    background-color: #4ECDC4;
+    background-color: #F7FFF7;
+}
+
+a {
+    padding-top: 25px;
+    font-size: 40px;
 }
 
 .title {
-    font-family: 'Mogra', cursive;
+    font-family: 'Indie Flower', cursive;
     color: #5e5e5e;
 }
 
 .dot {
-    color: #F4F1BB;
+    color: #FFE66D;
 }

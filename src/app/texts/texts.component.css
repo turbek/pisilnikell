@@ -9,16 +9,17 @@ ul {
     min-height: 250px;
     max-height: 300px;
     overflow: scroll;
-    background-color: #4ECDC4;
+    background-color: #F7FFF7;
 }
 
 li {
-    margin: 5px 5px 5px 2px;
-    border-top-right-radius: 5px;
+    margin: 5px 5px 5px 5px;
+    border-radius: 5px;
+    /*border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    background-color: #F7FFF7;
+    border-bottom-left-radius: 5px;*/
+    background-color: #FFE66D;
     padding-right: 0;
     line-height: 1;
     box-shadow: 2px 2px 2px #888888;

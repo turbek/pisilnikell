@@ -8,7 +8,8 @@
         [zoom]="zoom"
         [mapDraggable]="true"
         [streetViewControl]="false"
-        [disableDefaultUI]="true">
+        [disableDefaultUI]="true"
+        >
 
             <agm-marker
             [latitude]="lat"
@@ -16,17 +17,19 @@
             [markerDraggable]="true"
             [openInfoWindow]="true"
             (dragEnd)="setMarkerPosition($event)"
-            (dragEnd)="renderMessages()">
+            (dragEnd)="renderMessages()"
+            >
                 <agm-info-window>
                     Itt kell nagyon pisilned!
                 </agm-info-window>
+
             </agm-marker>
 
             <agm-marker *ngFor="let item of list | async"
             [latitude]="item.location.lat"
             [longitude]="item.location.lng"
             [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'">
-                <agm-info-window>
+                <agm-info-window #window [isOpen]="checkIfOpen(window)">
                     {{item.text}}<br>
                     <i class="fa fa-heart right"></i>{{item.upvote}}<br>
                     távolság: <strong>{{ howFar(item.location.lat, item.location.lng) }} m</strong><br>
@@ -49,16 +52,20 @@
                    [location]="location"
                    (itemDeleted)="deleteItem($event)"
                    (upvoteCreated)="onUpvoteAdded($event)"
-                   (upvoteDeleted)="onUpvoteDeleted($event)">
+                   (upvoteDeleted)="onUpvoteDeleted($event)"
+                   (itemClicked)="openInfoWindow($event)"
+                   >
         </app-texts>
 
         <div class="bottom col-xs-12">
-            <p class="center">Eddig vagyok hajlandó elmenni pisilni:</p>
+            <p class="center">Mennyire kell pisilni?</p>
             <p-slider class="col-xs-12"
                       [(ngModel)]="distance"
                       [min]="50"
                       [max]="1000"
-                      (ngModelChange)="renderMessages()">
+                      (ngModelChange)="renderMessages()"
+                      (ngModelChange)="checkIfOpen(window)"
+                      >
             </p-slider>
             <p class="center">{{distance}} m</p>
         </div>

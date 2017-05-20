@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
     lng: number = 19;
     distance: number = 450;
     zoom: number = 15;
+    openedWindow: {latitude: number, longitude: number};
 
     constructor(private db: AngularFireDatabase){
     }
@@ -103,6 +104,23 @@ export class AppComponent implements OnInit {
                 +String(lat1)
                 +","
                 +String(lon1);
+    }
+
+    checkIfOpen(window){
+        // console.log(window.hostMarker);
+        // console.log(window.hostMarker.latitude);
+        // console.log(window.hostMarker.latitude, window.hostMarker.longitude);
+        if(this.openedWindow === window._id){
+            console.log(window._id);
+            return true;
+        }
+        return false;
+
+    }
+
+    openInfoWindow(itemLocationObject){
+        this.openedWindow = itemLocationObject;
+        console.log(this.openedWindow)
     }
 
 }

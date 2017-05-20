@@ -1,7 +1,7 @@
 <ul class="container col-xs-12 list-group">
-    <li class="row" *ngFor="let item of list | async">
+    <li class="row" *ngFor="let item of list| async">
         <div class="padding-top col-xs-10"
-            (click)="textClicked()">
+            (click)="textClicked(item.location.lat, item.location.lng)">
             {{ item.text }}
         </div>
         <!-- <span class="col-xs-1" (click)="delete(item.$key)">X</span> -->

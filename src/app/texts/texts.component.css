@@ -6,24 +6,17 @@
 ul {
     padding: 0;
     list-style-type: none;
-    min-height: 250px;
-    max-height: 300px;
     overflow: scroll;
-    background-color: #F7FFF7;
+    background-color: #FFFDE7;
+    max-height: calc(100vh - 356px);
 }
 
 li {
-    margin: 5px 5px 5px 5px;
-    border-radius: 5px;
-    /*border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;*/
-    /*background-color: #FFE66D;*/
-    background-color: rgba(255, 230, 109, 0.58);
+    margin: 5px;
+    background-color: #FFF59D;
     padding-right: 0;
     line-height: 1;
-    box-shadow: 2px 2px 2px #888888;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
     display: flex;
     align-items: center; /*align vertical */
 }

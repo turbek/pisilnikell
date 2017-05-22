@@ -13,9 +13,9 @@ export class AppComponent implements OnInit {
     location = <Coordinates>{};
     lat: number = 47;
     lng: number = 19;
-    distance: number = 450;
+    distance: number = 200;
     zoom: number = 15;
-    openedWindow: {latitude: number, longitude: number};
+    openedWindowLocation: {latitude: number, longitude: number};
 
     constructor(private db: AngularFireDatabase){
     }
@@ -53,6 +53,7 @@ export class AppComponent implements OnInit {
         HTMLinput.value = null;
     }
 
+    // TODO: MERGE THESE TWO IN ONE METHOD
     onUpvoteAdded(upvoteKeyObject){
         let temp: number = upvoteKeyObject.upvote;
         this.db.object('/items/'+upvoteKeyObject.key).update({
@@ -76,6 +77,7 @@ export class AppComponent implements OnInit {
     setMarkerPosition(coordsObject){
         this.lat = coordsObject.coords.lat;
         this.lng = coordsObject.coords.lng;
+        this.openedWindowLocation = null;
     }
 
     calculateDistance(lat1: number, lon1: number){
@@ -106,21 +108,37 @@ export class AppComponent implements OnInit {
                 +String(lon1);
     }
 
+    // TODO: CHECK THIS
     checkIfOpen(window){
-        // console.log(window.hostMarker);
-        // console.log(window.hostMarker.latitude);
-        // console.log(window.hostMarker.latitude, window.hostMarker.longitude);
-        if(this.openedWindow === window._id){
-            console.log(window._id);
-            return true;
+        try {
+            if(window.hostMarker) {
+
+                let loc = this.openedWindowLocation;
+                let wlatitude = window.hostMarker.latitude;
+                let wlongitude = window.hostMarker.longitude;
+
+                if(loc.latitude === wlatitude && loc.longitude === wlongitude){
+                    return true;
+                }
+            }
+            else {
+                console.log("undefined")
+                return false;
+            }
         }
-        return false;
+        catch (e){
+            if(e instanceof TypeError){
+                // console.log("typeError");
+            }
+        }
 
     }
 
     openInfoWindow(itemLocationObject){
-        this.openedWindow = itemLocationObject;
-        console.log(this.openedWindow)
+        this.openedWindowLocation = itemLocationObject;
+        // console.log(this.openedWindow)
     }
+
+
 
 }

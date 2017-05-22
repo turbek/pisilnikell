@@ -16,6 +16,7 @@ export class TextsComponent implements OnInit {
     @Output() upvoteDeleted = new EventEmitter<{upvote: number, key: string}>();
     @Output() itemDeleted = new EventEmitter<{key: string}>();
     @Output() itemClicked = new EventEmitter<{latitude: number, longitude: number}>();
+    // @Output() itemClicked = new EventEmitter<{index: number}>();
     isActiveList = [];
 
     constructor() { }
@@ -54,5 +55,8 @@ export class TextsComponent implements OnInit {
     textClicked(latitude, longitude) {
         this.itemClicked.emit({latitude, longitude});
     }
+    // textClicked(index) {
+    //     this.itemClicked.emit({index})
+    // }
 
 }

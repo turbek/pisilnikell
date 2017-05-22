@@ -1,10 +1,10 @@
 .sebm-google-map-container {
     padding: 0;
-    height: 250px;
+    height: 200px;
 }
 
 .app {
-    background-color: #F7FFF7;
+    background-color: #FFFDE7;
 }
 
 .center {
@@ -16,4 +16,10 @@
 .inputField {
     padding-left: 30px;
     padding-right: 0;
+}
+
+.bottom {
+    height: 70px;
+    position: fixed;
+    bottom: 0;
 }

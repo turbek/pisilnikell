@@ -1,6 +1,9 @@
-<app-navbar [title]="title"></app-navbar>
 <div class="container app">
     <div class="row">
+        <app-navbar class="noPadding col-xs-12"
+        [title]="title"
+        >
+        </app-navbar>
 
         <agm-map class="col-xs-12"
         [latitude]="lat"

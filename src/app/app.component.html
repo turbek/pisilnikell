@@ -1,9 +1,26 @@
+<div class="input">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                 <input class="form-control inputform" #search
+                 placeholder="search for location"
+                 autocorrect="off"
+                 autocapitalize="off"
+                 spellcheck="off"
+                 type="text"
+                 [formControl]="searchControl">
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container app">
     <div class="row">
         <app-navbar class="noPadding col-xs-12"
         [title]="title"
         >
         </app-navbar>
+
+
 
         <agm-map class="col-xs-12"
         [latitude]="lat"
@@ -22,7 +39,9 @@
             (dragEnd)="setMarkerPosition($event)"
             (dragEnd)="renderMessages()"
             >
-                <agm-info-window>
+                <agm-info-window
+                [isOpen]="true"
+                >
                     Itt kell nagyon pisilned!
                 </agm-info-window>
 
@@ -32,7 +51,10 @@
             [latitude]="item.location.lat"
             [longitude]="item.location.lng"
             [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'">
-                <agm-info-window #window [isOpen]="checkIfOpen(window)">
+                <agm-info-window #window
+                [isOpen]="checkIfOpen(window)"
+                (infoWindowClose)="infoWindowClose(window)"
+                >
                     {{item.text}}<br>
                     <i class="fa fa-heart right"></i>{{item.upvote}}<br>
                     távolság: <strong>{{ howFar(item.location.lat, item.location.lng) }} m</strong><br>
@@ -60,18 +82,30 @@
                    >
         </app-texts>
 
-        <div class="bottom col-xs-12">
-            <p class="center">Mennyire kell pisilni?</p>
-            <p-slider class="col-xs-12"
-                      [(ngModel)]="distance"
-                      [min]="50"
-                      [max]="1000"
-                      (ngModelChange)="renderMessages()"
-                      (ngModelChange)="checkIfOpen(window)"
-                      >
-            </p-slider>
-            <p class="center">{{distance}} m</p>
-        </div>
 
+
+
+    </div>
+</div>
+<div class="bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="center">Mennyire kell pisilni?</p>
+                <md-slider class="slider col-xs-12"
+                [min]="50"
+                [max]="1000"
+                [step]="1"
+                [value]="distance"
+                [invert]="true"
+                (change)="setDistance($event)"
+                (change)="renderMessages()"
+                (change)="checkIfOpen(window)"
+                (change)="setZoom(distance)"
+                >
+                </md-slider>
+                <p class="center">{{distanceToValue()}}</p>
+            </div>
+        </div>
     </div>
 </div>

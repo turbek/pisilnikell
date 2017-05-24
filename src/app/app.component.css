@@ -1,6 +1,6 @@
 .sebm-google-map-container {
     padding: 0;
-    height: 200px;
+    height: 250px;
 }
 
 .app {
@@ -19,7 +19,27 @@
 }
 
 .bottom {
-    height: 70px;
+    height: 58px;
     position: fixed;
     bottom: 0;
+    width: 100%;
+}
+
+.slider {
+    margin: -15px 0 -15px 0;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.input {
+    width: 100%;
+    position: fixed;
+    z-index: 1000000;
+    top: 55px;
+}
+
+.inputform {
+    height: 25px;
 }

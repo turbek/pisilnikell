@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, NgZone, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import {  AgmCoreModule, MapsAPILoader } from '@agm/core';
 import "rxjs/add/operator/map";
+
+declare var google: any;
+
 
 @Component({
   selector: 'app-root',
@@ -8,16 +13,21 @@ import "rxjs/add/operator/map";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+    searchControl: FormControl;
     list: FirebaseListObservable<any[]>;
     title: string = 'pisilnikell';
     location = <Coordinates>{};
     lat: number = 47;
     lng: number = 19;
+    maxDistance: number = 1000;
     distance: number = 200;
-    zoom: number = 15;
+    zoom: number = 16;
     openedWindowLocation: {latitude: number, longitude: number};
 
-    constructor(private db: AngularFireDatabase){
+    @ViewChild("search")
+    searchElementRef: any;
+
+    constructor(private db: AngularFireDatabase, private _loader: MapsAPILoader, private ngZone: NgZone){
     }
 
     setPosition(position){
@@ -31,6 +41,30 @@ export class AppComponent implements OnInit {
             navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
         };
         this.renderMessages();
+
+        this.searchControl = new FormControl();
+
+        //load Places Autocomplete
+        this._loader.load().then(() => {
+          let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+            types: ["address"]
+          });
+          autocomplete.addListener("place_changed", () => {
+            this.ngZone.run(() => {
+                //get the place result
+                let place = autocomplete.getPlace();
+
+                //verify result
+                if (place.geometry === undefined || place.geometry === null) {
+                return;
+                }
+
+                //set latitude, longitude and zoom
+                this.lat = place.geometry.location.lat();
+                this.lng = place.geometry.location.lng();
+            });
+          });
+        });
     }
 
     renderMessages(){
@@ -128,17 +162,66 @@ export class AppComponent implements OnInit {
         }
         catch (e){
             if(e instanceof TypeError){
-                // console.log("typeError");
+                // console.log("typeError in checkIfOpen");
             }
         }
 
     }
 
-    openInfoWindow(itemLocationObject){
+    openInfoWindow(itemLocationObject: {latitude: number, longitude: number}){
         this.openedWindowLocation = itemLocationObject;
         // console.log(this.openedWindow)
     }
 
+    // TODO: UNCOMMENT
+    setZoom(distance: number){
+        if(distance >= 0 && distance <= 150){
+            this.zoom = 17;
+        }
+        else if(distance >= 151 && distance <= 300){
+            this.zoom = 16;
+        }
+        else if(distance >= 301 && distance <= 700){
+            this.zoom = 15;
+        }
+        else if(distance >= 701 && distance <= 1000){
+            this.zoom = 14;
+        }
+        else {
+            this.zoom = 16;
+        }
+    }
 
+    infoWindowClose(window){
+        try{
+            if(window.hostMarker.latitude === this.openedWindowLocation.latitude && window.hostMarker.longitude === this.openedWindowLocation.longitude){
+                this.openedWindowLocation = null;
+            }
+        }
+        catch(e){
+            if(e instanceof TypeError){
+                // console.log("typeError in infoWindowClose")
+            }
+        }
+    }
+
+    setDistance(MdSliderChange){
+        this.distance = MdSliderChange.value;
+    }
+
+    distanceToValue(){
+        if(this.distance >= 0 && this.distance <= 333) {
+            return "nagyon"
+        }
+        else if (this.distance >= 334 && this.distance <= 666) {
+            return "közepesen"
+        }
+        else if(this.distance >= 667 && this.distance <= 1000) {
+            return "kicsit"
+        }
+        else {
+            return "undefined"
+        }
+    }
 
 }

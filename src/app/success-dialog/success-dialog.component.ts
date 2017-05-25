@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
 
 
@@ -13,5 +13,9 @@ export class SuccessDialogComponent implements OnInit {
 
   ngOnInit() {
   }
+
+    peeSuccess(text){
+        console.log(text.value);
+    }
 
 }

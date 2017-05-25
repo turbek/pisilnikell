@@ -18,7 +18,7 @@ import { AgmInfoWindow } from '@agm/core/directives/info-window';
 import { NavbarComponent } from './navbar/navbar.component';
 
 
-import { MdSliderModule, MdButtonModule, MdDialogModule } from '@angular/material';
+import { MdSliderModule, MdButtonModule, MdDialogModule, MdInputModule } from '@angular/material';
 import { TextsComponent } from './texts/texts.component';
 import { SuccessDialogComponent } from './success-dialog/success-dialog.component';
 
@@ -40,6 +40,7 @@ import { SuccessDialogComponent } from './success-dialog/success-dialog.componen
         MdSliderModule,
         MdButtonModule,
         MdDialogModule,
+        MdInputModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireDatabaseModule,
         AngularFireAuthModule,

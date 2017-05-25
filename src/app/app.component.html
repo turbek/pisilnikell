@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-12">
                  <input class="form-control inputform" #search
-                 placeholder="search for location"
+                 placeholder="Keresés"
                  autocorrect="off"
                  autocapitalize="off"
                  spellcheck="off"
@@ -40,9 +40,9 @@
             (dragEnd)="renderMessages()"
             >
                 <agm-info-window
-                [isOpen]="true"
+                [isOpen]="mainMarkerOpen"
                 >
-                    Itt kell nagyon pisilned!
+                    {{mainMarkerText}}
                 </agm-info-window>
 
             </agm-marker>
@@ -64,14 +64,19 @@
 
         </agm-map>
 
-        <div class="inputField col-xs-12 row">
-            <div class="noPadding col-xs-10">
+
+            <button md-raised-button class="peesuccess col-xs-12"
+            (click)="openDropPinDialog()"
+            >
+            sikerült pisilni!</button>
+        <!-- <div class="inputField col-xs-12"> -->
+            <!-- <div class="noPadding col-xs-10">
                 <input type="text" class="form-control col-xs-12" #textInput>
             </div>
             <div class="noPadding col-xs-2">
                 <button class="btn btn-primary col-xs-12" (click)="add(textInput)">Add</button>
-            </div>
-        </div>
+            </div> -->
+        <!-- </div> -->
 
         <app-texts [list]="list"
                    [location]="location"

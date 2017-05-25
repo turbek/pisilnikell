@@ -2,6 +2,9 @@ import { Component, NgModule, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import {  AgmCoreModule, MapsAPILoader } from '@agm/core';
+import { SuccessDialogComponent } from './success-dialog/success-dialog.component';
+import { MdDialog, MdDialogRef } from '@angular/material';
+
 import "rxjs/add/operator/map";
 
 declare var google: any;
@@ -23,11 +26,14 @@ export class AppComponent implements OnInit {
     distance: number = 200;
     zoom: number = 16;
     openedWindowLocation: {latitude: number, longitude: number};
+    mainMarkerText: string = "Itt kell nagyon pisilned!"
+    mainMarkerOpen: boolean = true;
+    selectedOption: string;
 
     @ViewChild("search")
     searchElementRef: any;
 
-    constructor(private db: AngularFireDatabase, private _loader: MapsAPILoader, private ngZone: NgZone){
+    constructor(private db: AngularFireDatabase, private _loader: MapsAPILoader, private ngZone: NgZone, private dialog: MdDialog){
     }
 
     setPosition(position){
@@ -46,10 +52,11 @@ export class AppComponent implements OnInit {
 
         //load Places Autocomplete
         this._loader.load().then(() => {
-          let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-            types: ["address"]
-          });
-          autocomplete.addListener("place_changed", () => {
+            let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+                componentRestrictions: {'country': 'HU'},
+            });
+        //   types: ["address"]
+        autocomplete.addListener("place_changed", () => {
             this.ngZone.run(() => {
                 //get the place result
                 let place = autocomplete.getPlace();
@@ -62,8 +69,9 @@ export class AppComponent implements OnInit {
                 //set latitude, longitude and zoom
                 this.lat = place.geometry.location.lat();
                 this.lng = place.geometry.location.lng();
+                this.renderMessages();
+                });
             });
-          });
         });
     }
 
@@ -170,6 +178,7 @@ export class AppComponent implements OnInit {
 
     openInfoWindow(itemLocationObject: {latitude: number, longitude: number}){
         this.openedWindowLocation = itemLocationObject;
+        this.mainMarkerOpen = false;
         // console.log(this.openedWindow)
     }
 
@@ -222,6 +231,17 @@ export class AppComponent implements OnInit {
         else {
             return "undefined"
         }
+    }
+
+    openDropPinDialog(){
+        this.mainMarkerText = "Itt sikerült pisilnem!";
+        this.mainMarkerOpen = true;
+        let dialogRef = this.dialog.open(SuccessDialogComponent);
+        dialogRef.afterClosed().subscribe(result => {
+            this.selectedOption = result;
+        });
+        this.openedWindowLocation = null;
+        console.log(this.selectedOption);
     }
 
 }

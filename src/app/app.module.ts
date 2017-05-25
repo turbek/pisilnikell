@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, ApplicationRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,31 +18,38 @@ import { AgmInfoWindow } from '@agm/core/directives/info-window';
 import { NavbarComponent } from './navbar/navbar.component';
 
 
-import { MdSliderModule } from '@angular/material';
+import { MdSliderModule, MdButtonModule, MdDialogModule } from '@angular/material';
 import { TextsComponent } from './texts/texts.component';
+import { SuccessDialogComponent } from './success-dialog/success-dialog.component';
 
 
 @NgModule({
     declarations: [
         AppComponent,
         NavbarComponent,
-        TextsComponent
+        TextsComponent,
+        SuccessDialogComponent
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
         MdSliderModule,
+        MdButtonModule,
+        MdDialogModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
         AgmCoreModule.forRoot({
           apiKey: 'AIzaSyA8rAZslIIpPxRswiU9as5k93kpGOQfXAw',
-          libraries: ['places']
+          libraries: ['places'],
+          language: 'hu'
         })
     ],
+    entryComponents: [ SuccessDialogComponent ],
     providers: [],
     bootstrap: [AppComponent]
 })
